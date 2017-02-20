@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -52,7 +53,24 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
+                    <navigationItem key="navigationItem" title="Detail" id="ZSs-Pq-jvc">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="bookmarks" id="f6O-yq-maj">
+                                <color key="tintColor" red="0.47843137250000001" green="0.40000000000000002" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <segue destination="nly-NH-Hzl" kind="popoverPresentation" identifier="segueToBookmarks" popoverAnchorBarButtonItem="f6O-yq-maj" id="mlb-BT-th7">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="save" id="HLq-DX-8aC">
+                                <color key="tintColor" red="0.47843137250000001" green="0.40000000000000002" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="saveToFavorites:" destination="JEX-9P-axG" id="1Zo-0p-Kyv"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="toolBar" destination="pKa-bn-AXQ" id="f74-pD-UlT"/>
                     </connections>
@@ -60,6 +78,46 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="708.984375" y="128.90625"/>
+        </scene>
+        <!--Popover Table View Controller-->
+        <scene sceneID="w9a-XR-6xU">
+            <objects>
+                <tableViewController id="nly-NH-Hzl" customClass="PopoverTableViewController" customModule="Go_Ask_A_Duck" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" id="BwM-Qo-3FE">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PopoverCell" textLabel="chc-XA-nBt" rowHeight="50" style="IBUITableViewCellStyleDefault" id="9Vv-WU-98H">
+                                <rect key="frame" x="0.0" y="28" width="1024" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Vv-WU-98H" id="6fh-Im-AMy">
+                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="49.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="chc-XA-nBt">
+                                            <rect key="frame" x="176" y="0.0" width="672" height="49.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="nly-NH-Hzl" id="gdQ-Bw-IXg"/>
+                            <outlet property="delegate" destination="nly-NH-Hzl" id="LAX-3Q-JSV"/>
+                        </connections>
+                    </tableView>
+                    <value key="contentSizeForViewInPopover" type="size" width="500" height="500"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="1024" height="768"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="luP-dE-Ii1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1417.96875" y="108.59375"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">

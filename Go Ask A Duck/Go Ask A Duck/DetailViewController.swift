@@ -9,12 +9,13 @@
 import UIKit
 import WebKit
 
-class DetailViewController: UIViewController, WKNavigationDelegate {
+class DetailViewController: UIViewController, WKNavigationDelegate, DetailBookmarkDelegate {
     
 
     @IBOutlet weak var toolBar: UIToolbar!
     
     var webView: WKWebView!
+    
     
     // MARK: - Master View item
     var detailItem: SearchResult? {
@@ -26,6 +27,7 @@ class DetailViewController: UIViewController, WKNavigationDelegate {
     
 
     func configureView() {
+
         // Update the user interface for the detail item.
             if let detail = self.detailItem {
                 webView = WKWebView()
@@ -69,7 +71,41 @@ class DetailViewController: UIViewController, WKNavigationDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    
+    
+    
+    @IBAction func saveToFavorites(_ sender: Any) {
+        
+        detailItem?.favorite = true
+        Favorites.shared.add(new: detailItem!)
+        
+        print(" **********      SAVED ITEMS************")
+        for favorite in Favorites.favorites {
+            print("item: \(favorite.searchString)")
+        }
+        
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToBookmarks" {
+            let bvc = segue.destination as! PopoverTableViewController
+            bvc.bookmarkDelegate = self
+        }
+    }
+    
+    
+    
+    func bookmarkPassedURL(url: String) {
+        webView = WKWebView()
+        webView.navigationDelegate = self
+        view = webView
+        let requestURL : URL = NSURL(string: url) as! URL
+        
+        webView.load(URLRequest(url: requestURL))
+        webView.allowsBackForwardNavigationGestures = true
+    }
 
 
 

@@ -25,14 +25,15 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let defaults = UserDefaults.standard
+        
+        if let savedFavorites = defaults.object(forKey: "SavedArray") as? Data {
+            Favorites.favorites = NSKeyedUnarchiver.unarchiveObject(with: savedFavorites) as! [SearchResult]
+        }
+        
+        
         self.navigationItem.leftBarButtonItem = self.editButtonItem
-
-//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-//        self.navigationItem.rightBarButtonItem = addButton
-//        if let split = self.splitViewController {
-//            let controllers = split.viewControllers
-//            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-//        }
       
         applyColor()
         
@@ -131,13 +132,26 @@ class MasterViewController: UITableViewController {
         
         let convertedQuery = term.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
-        SharedNetworking.sharedInstance.getDataFromURL(urlString: "https://api.duckduckgo.com/?q=" + convertedQuery! + "&format=json&pretty=1") {(response) in
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        do {
+
+            try SharedNetworking.sharedInstance.getDataFromURL(urlString: "https://api.duckduckgo.com/?q=" + convertedQuery! + "&format=json&pretty=1") {(response) in
         
             DispatchQueue.main.async {
                 self.objects = SharedNetworking.sharedInstance.allResults
                 self.tableView.reloadData()
+                }
             }
+        } catch {
+            let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
+        
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+
   
     }
 

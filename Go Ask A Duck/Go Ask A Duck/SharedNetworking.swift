@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum connectionError : Error {
+    case noData(message : String)
+}
+
 class SharedNetworking {
     
     private init(){
@@ -19,11 +23,12 @@ class SharedNetworking {
     
     
     // Attribution: - https://thatthinginswift.com/completion-handlers/
-    func getDataFromURL(urlString: String, completion: @escaping ([SearchResult]) -> Void){
+    func getDataFromURL(urlString: String, completion: @escaping ([SearchResult]) -> Void) throws {
         
         
         guard let url = NSURL(string: urlString) else {
-            fatalError("Unable to create NSURL from string")
+            throw connectionError.noData(message: "Unable to create NSURL from string")
+            //fatalError("Unable to create NSURL from string")
         }
         
         // Create a vanilla url session
@@ -38,6 +43,7 @@ class SharedNetworking {
             // Ensure there were no errors returned from the request
             guard error == nil else {
                 print("error: \(error!.localizedDescription)")
+                //throw connectionError.noData(message: "Error: \(error!.localizedDescription)")
                 fatalError("Error: \(error!.localizedDescription)")
             }
             
@@ -89,6 +95,8 @@ class SharedNetworking {
                 self.allResults = tempResultsArray
                 
                 completion(self.allResults)
+                
+                
                 
                 
             } catch {
