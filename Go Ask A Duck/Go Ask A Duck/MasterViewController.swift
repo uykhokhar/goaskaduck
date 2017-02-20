@@ -144,8 +144,8 @@ class MasterViewController: UITableViewController {
                 }
             }
         } catch {
-            let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+            let alert = UIAlertController(title: "Connection Error", message: "Could not retrieve data from Duck Duck Go", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
         
