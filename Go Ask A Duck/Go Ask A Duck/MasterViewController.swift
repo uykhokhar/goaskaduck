@@ -127,7 +127,7 @@ class MasterViewController: UITableViewController {
     
     
     // MARK: - Search and fetch results
-    
+     
     func search(term: String){
         
         let convertedQuery = term.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
